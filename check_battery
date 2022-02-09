@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+p=$(cat /sys/class/power_supply/BAT0/capacity)
+
+if [[ $p -lt 15 ]]; then
+    notify-send "Battery" "Battery is at $p% charge." -u critical;
+fi
