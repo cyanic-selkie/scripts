@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+n=$(paru -Qu | wc -l)
+
+if [[ $n -gt 0 ]]; then
+    notify-send "Updates" "There are $n updates pending." -u low;
+fi

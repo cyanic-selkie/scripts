@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
+
+[[ "$1" =~ xt=urn:btih:([^&/]+) ]] || exit
+hashh=${BASH_REMATCH[1]}
+if [[ "$1" =~ dn=([^&/]+) ]];then
+    name=${BASH_REMATCH[1]}
+else
+    name=$hashh
+fi
+
+name=$(urldecode $name)
+
+transmission-remote -a "$1"
+
+if [ $? -eq 0 ]; then
+    notify-send "Torrent" "Successfuly added\n$name."
+else
+    notify-send "Torrent" "Failed adding\n$name." -u critical
+fi
